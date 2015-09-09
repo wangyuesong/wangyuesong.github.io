@@ -1,0 +1,29 @@
+---
+title: Tags
+layout: default
+---
+<div id="article">
+    <div class="row">
+        <h3>TAGS</h3>
+    </div>
+    <div class="row">
+        {% for tag in site.tags %}
+        <a href="#" class="wys-tag"> {{ tag[0]}} </a>
+        {% endfor %}
+    </div>
+    <hr/>
+    {%for tag in site.tags %}
+    <div class="row">
+        <h3 name="{{tag[0]}}" id="{{tag[0]}}">{{tag[0]}}</h3>
+        {% for posts in tag %}
+        {% for post in posts %}
+        <a href="{{ post.url }}">{{ post.title }}</a><small class="category_list_post_date">{{ post.date | date: "%b %-d, %Y" }}</small>
+        <br/>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <div class="row">
+        <hr/>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+name: YuesongWang
+englishname: Bob
+author: YuesongWang
+# baseurl: /
+description: <p>Personal Website </p><p> Share & Record </p>
+github: https://github.com/wangyuesong
+facebook: https://www.facebook.com/profile.php?id=100006784235764
+linkedin: https://www.linkedin.com/profile/view?idååå=AAMAABYFEv8Bpu4ULKZ8P7XAAXgZ4853Jbh661E&trk=hp-identity-photo
+email: wangyuesong0@gmail.com
+location: 42°2'16"N   70°12'47"W
+disqus: wangyuesong
+
+##Make sure to edit the above fields, especially for disqus.
+
+
+highlighter: pygments
+markdown: redcarpet
+redcarpet:
+  extensions: ["tables"]
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"

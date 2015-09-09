@@ -1,0 +1,24 @@
+---
+title: Categories
+layout: default
+---
+<div id="article">
+    <div class="row">
+        <h3>CATEGORIES 文章分类</h3>
+    </div>
+    {% for category in site.categories %}
+    <hr/>
+    <h3 id="{{ category | first }}" class="category_name"> {{ category | first | capitalize }} <a href="#{{ category | first }}" class="header-link"> <li class="fa fa-link"></li> </a></h3>
+    {% for posts in category %}
+    {% for post in posts %}
+    {% if post.url %}
+    <a href="{{ post.url }}">{{ post.title }}</a>&nbsp; <small class="category_list_post_date">{{ post.date | date: "%b %-d, %Y" }}</small>
+    <br/>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+    <div class="row">
+        <hr/>
+    </div>
+</div>

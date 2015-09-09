@@ -1,0 +1,73 @@
+.wys-separator {
+    margin: 20px 0 20px 0;
+    border-bottom: thin solid #f0f0f0;
+}
+
+.wys-page-title {
+    text-align: center;
+}
+
+/*Resume*/
+.wys-section {
+    display: block;
+}
+.wys-section .wys-section-image {
+    display: inline;
+    margin: 10px 0px 5px 10px;
+    float: right;
+    width: 130px;
+    height: auto;
+}
+.wys-section .wys-section-name {
+    font-size: 22px;
+}
+.wys-section .wys-location {
+    line-height: 12px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: rgb(67, 70, 73);
+}
+.wys-section .wys-dates {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 10px;
+    font-weight: normal;
+    font-style: italic;
+    color: rgb(102, 102, 102);
+}
+.wys-details .wys-descriptions {
+    font-size: 15px;
+    line-height: 20px;
+}
+.wys-details li {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+/*TAGS*/
+.wys-tag {
+    display: inline-block;
+    background-color: #4CAFD6;
+    color: white;
+    font-size: 14px;
+    border-radius: 12px;
+    padding: 2px 10px 2px 10px;
+    margin: 0 0 20px 0;
+}
+
+/*POST TAGS*/
+.right {
+    display: inline-block;
+    float: right;
+}
+
+.wys-post-tags {
+    display: inline-block;
+    background-color: #4CAFD6;
+    color: white;
+    font-size: 14px;
+    border-radius: 12px;
+    padding: 2px 10px 2px 10px;
+    margin: 0 0 20px 0;
+}
+
