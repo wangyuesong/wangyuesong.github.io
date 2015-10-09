@@ -13,7 +13,9 @@ You may assume that all inputs are consist of lowercase letters a-z.
 
 定义：
 	所有含有公共前缀的字符串将挂在树中同一个结点下。实际上trie简明的存储了存在于串集合中的所有公共前缀。
+	
 ![Yanghu](/assets/2015-08-03-Implement Trie前缀树/IMG_1267.gif)
+
 这里会遇到一个问题，那就是如果这些将要存储的字符串中，有一个是另一个的前缀，比如bi和big，那么在一个枝干上将出现两个叶子节点，这是不符合定义的
 	
 为了避免这个问题，我们在每个字符串后面加上一个$,这样就不存在互为前缀的字符串了
