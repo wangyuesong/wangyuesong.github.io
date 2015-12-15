@@ -9,7 +9,7 @@ tags:
 - 九章算法
 
 ---
-1. Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+### Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
 
 You have the following 3 operations permitted on a word:
 
@@ -71,7 +71,7 @@ if(word1.charAt(i-1) == word2.charAt(j-1))
 
 
 
-2. Given a string S and a string T, count the number of distinct subsequences of T in S.
+### Given a string S and a string T, count the number of distinct subsequences of T in S.
 
 A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
 
@@ -124,3 +124,27 @@ public class Solution {
 }
 
 {% endhighlight %}
+
+### Longest common subsequence and Longest common substring
+
+最长公共子序列和最长公共字串，都是二维动态规划问题，状态表中由于第i行只用到了第i-1行的东西，可以使用滚动数组进行优化
+
+最长公共子序列的递推关系为：
+{% highlight java %}
+if(s[i-1] == s[j-1])
+	f[i][j] = f[i][j] + 1;
+else
+	Max(f[i-1][j],f[i][j-1]);
+{% endhighlight %}
+至今没有想明白的是common string的解法，我想的是
+{% highlight java %}
+dp[i][j] = 
+if(s[i-1] != t[j-1]])
+	Max(dp[i-1][j],dp[i][j-1]);
+else
+	if(i-2,j-2 is valid and s[i-2] == t[j-2])
+		dp[i-1][j-1]+1
+	else
+		Max(1,dp[i-1][j-1])
+{% endhighlight %}
+答案则将dp[i][j] 考虑为以i，j结尾的字符串的的公共字串，答案就相当简单，我目前还没有想好为什么我的想法是错的
