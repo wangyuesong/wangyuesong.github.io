@@ -82,7 +82,7 @@ peek，element等方法速度为1，不需要进行调整
 offer/add, poll/remove, peek/element,所有pair的左侧方法都是不抛出异常，右侧抛出
 
 代码如下：
-{% hightlight java %}
+{% highlight java %}
 public ListNode mergeKLists(List<ListNode> lists) {  
         // write your code here
         // return mergeHelper(lists, 0, lists.size()-1);
