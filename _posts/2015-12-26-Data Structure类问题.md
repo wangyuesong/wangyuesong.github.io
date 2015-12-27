@@ -40,7 +40,7 @@ PriorityQueue的增删都是LogN，取当前最小(大)元素是1
 
 ####Set
  
-Set就记住一个HashSet就好了
+Set就记住一个HashSet就好了，hashSet的增加元素也是add，查找元素是否存在使用的是contains
 
 
 下面是它几个实现类的解释
@@ -60,3 +60,20 @@ LinkedHashSet is between HashSet and TreeSet. It is implemented as a hash table 
 Map一般只用HashMap就够了，HashTable是线程安全的，但是效率低
 
 TreeMap和LinkedHashMap和Set差不多
+
+大概记录一下Lintcode上这类题目的解法：
+Merge K sorted Array: PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中最多存在K个element，要merge这个n个element的array需要向queue中add n次，每次都是logK的效率，所以效率是NLogK
+
+Rehashing: 很简单的实现，使用数组加链表实现了hashTable
+
+Longest Consecutive Sequence: 在一个未排序的数组中找到最长的连续数列。使用数据结构HashMap来记录当前这个元素是否被检查过了以及方便o（1）的元素查找，遍历nums中的元素，如果检查过了就跳过，没检查过就向hashMap中寻找两侧的元素并且统计长度，断了后局部max和全局max比较
+
+Merge k sorted List: 同样是PriorityQueue，这次连数据结构都不用建了，但是要写一个Comparator传给PQ，作为ListNode的比较器
+
+Implement Queue By Two Stacks: 一个Stack存正序（相对于Queue的正序），一个Stack存反序，add时向反序的Stack中push，此时反序Stack最顶端是最新push进来的元素。然后poll时，如果正序stack是空，将反序stack全pop到正序stack中，然后再正序stack pop一个出来
+
+MinStack: 保存两个栈，一个栈用于保存真正元素，另一个保存当前最小
+
+Ugly Number:有点像数学题，还是要用PriorityQueue和一个HashSet（记录该元素是否已经被加入过Queue），3，5，7，9，15，21，25。。。多写几个应该就发现规律，注意使用Long
+
+发现HashMap（Set）在记录某个元素是否之前被遍历过很有用处
