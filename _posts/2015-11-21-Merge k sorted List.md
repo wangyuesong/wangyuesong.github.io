@@ -69,15 +69,15 @@ Priority Queue是Queue的一种实现，Java的Priority Queue是基于最大堆�
 
 3. 堆首先将元素堆入数组，然后开始构建堆，构建堆的动作可以通过元素一一插入堆来实现，效率为nLogn(每次插入都要进行LogN的调整)。也可以通过递归的方法，逐层由下向上建立Heap，耗时为n
 
-PriorityQueue其add的效率为O(logN),因为每次增加都是将元素加入堆底，然后进行adjust
+PriorityQueue其add，offer的效率为O(logN),因为每次增加都是将元素加入堆底，然后进行adjust
 
-poll（取最大）的效率也为O(logN),同样是因为要进行调整
+poll，remove（删并取最大）的效率也为O(logN),同样是因为要进行调整
 
-remove（删除某个元素）和contains效率为n，因为要搜索两侧
+remove(index)（删除某个元素）和contains效率为n，因为要搜索两侧
 
 peek，element等方法速度为1，不需要进行调整
 
-还有Queue的一系列方法的区别
+记录一下Queue的一系列方法的区别
 
 offer/add, poll/remove, peek/element,所有pair的左侧方法都是不抛出异常，右侧抛出
 
