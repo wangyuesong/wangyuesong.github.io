@@ -62,18 +62,113 @@ Map一般只用HashMap就够了，HashTable是线程安全的，但是效率低
 TreeMap和LinkedHashMap和Set差不多
 
 大概记录一下Lintcode上这类题目的解法：
-Merge K sorted Array: PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中最多存在K个element，要merge这个n个element的array需要向queue中add n次，每次都是logK的效率，所以效率是NLogK
+##### Merge K sorted Array
 
-Rehashing: 很简单的实现，使用数组加链表实现了hashTable
+PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中最多存在K个element，要merge这个n个element的array需要向queue中add n次，每次都是logK的效率，所以效率是NLogK
 
-Longest Consecutive Sequence: 在一个未排序的数组中找到最长的连续数列。使用数据结构HashMap来记录当前这个元素是否被检查过了以及方便o（1）的元素查找，遍历nums中的元素，如果检查过了就跳过，没检查过就向hashMap中寻找两侧的元素并且统计长度，断了后局部max和全局max比较
+##### Rehashing
 
-Merge k sorted List: 同样是PriorityQueue，这次连数据结构都不用建了，但是要写一个Comparator传给PQ，作为ListNode的比较器
+很简单的实现，使用数组加链表实现了hashTable
 
-Implement Queue By Two Stacks: 一个Stack存正序（相对于Queue的正序），一个Stack存反序，add时向反序的Stack中push，此时反序Stack最顶端是最新push进来的元素。然后poll时，如果正序stack是空，将反序stack全pop到正序stack中，然后再正序stack pop一个出来
+##### Longest Consecutive Sequence
 
-MinStack: 保存两个栈，一个栈用于保存真正元素，另一个保存当前最小
+在一个未排序的数组中找到最长的连续数列。使用数据结构HashMap来记录当前这个元素是否被检查过了以及方便o（1）的元素查找，遍历nums中的元素，如果检查过了就跳过，没检查过就向hashMap中寻找两侧的元素并且统计长度，断了后局部max和全局max比较
 
-Ugly Number:有点像数学题，还是要用PriorityQueue和一个HashSet（记录该元素是否已经被加入过Queue），3，5，7，9，15，21，25。。。多写几个应该就发现规律，注意使用Long
+#####  Merge k sorted List
+
+ 同样是PriorityQueue，这次连数据结构都不用建了，但是要写一个Comparator传给PQ，作为ListNode的比较器
+
+##### Implement Queue By Two Stacks: 
+
+一个Stack存正序（相对于Queue的正序），一个Stack存反序，add时向反序的Stack中push，此时反序Stack最顶端是最新push进来的元素。然后poll时，如果正序stack是空，将反序stack全pop到正序stack中，然后再正序stack pop一个出来
+
+##### MinStack:
+
+保存两个栈，一个栈用于保存真正元素，另一个保存当前最小
+
+##### Ugly Number:
+
+有点像数学题，还是要用PriorityQueue和一个HashSet（记录该元素是否已经被加入过Queue），3，5，7，9，15，21，25。。。多写几个应该就发现规律，注意使用Long
 
 发现HashMap（Set）在记录某个元素是否之前被遍历过很有用处
+
+##### LRU Cache: 
+
+细节很多，使用一个双向链表和一个HashMap，HashMap用于使用o（1）的时间进行get,set操作，双向链表用于记录Last Recently Used的信息
+
+使用Hedad和Tail两个dummy指针
+
+使用一个moveToHead函数来把一个孤立的点插入Head后
+
+
+{% highlight java %}
+public class Solution {
+    int capacity = -1;
+    HashMap<Integer, ListNode> map = new HashMap<Integer,ListNode>();
+    ListNode head = new ListNode(-1,-1);
+    ListNode tail = new ListNode(-1,-1);
+    private class ListNode{
+        public int val;
+        public int key;
+        public ListNode prev;
+        public ListNode next;
+        public ListNode(int val, int key){
+            this.val = val;
+            this.key = key;
+        }
+    }
+    // @param capacity, an integer
+    public Solution(int capacity) {
+        // write your code here
+         head.next = tail;
+        tail.prev = head;
+        this.capacity = capacity;
+    }
+
+    // @return an integer
+    public int get(int key) {
+       if(!map.containsKey(key)){
+            return -1;
+       }
+       ListNode currentNode = map.get(key);
+       currentNode.prev.next = currentNode.next;
+       currentNode.next.prev = currentNode.prev;
+       moveToHead(currentNode);
+       return currentNode.val;
+    }
+
+    // @param key, an integer
+    // @param value, an integer
+    // @return nothing
+    public void set(int key, int value) {
+        //Contains the key
+        if(get(key) != -1){
+            map.get(key).val = value;
+            return;
+        }
+        //Don't violate capacity restriction
+        if(map.size() < capacity){
+            ListNode currentNode = new ListNode(value,key);
+            moveToHead(currentNode);
+            map.put(currentNode.key,currentNode);
+        }
+        //Violate capacity
+        else{
+            ListNode currentNode = new ListNode(value,key);
+            moveToHead(currentNode);
+             map.put(currentNode.key, currentNode);
+            //Remove element from map
+            map.remove(tail.prev.key);
+            tail.prev.prev.next = tail;
+            tail.prev = tail.prev.prev;
+        }
+    }
+    
+    public void moveToHead(ListNode currentNode){
+           currentNode.prev = head;
+           currentNode.next = head.next;
+           head.next = currentNode;
+           currentNode.next.prev = currentNode;
+    }
+}
+{% endhighlight %}
