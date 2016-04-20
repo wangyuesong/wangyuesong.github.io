@@ -82,6 +82,10 @@ PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中
 
 一个Stack存正序（相对于Queue的正序），一个Stack存反序，add时向反序的Stack中push，此时反序Stack最顶端是最新push进来的元素。然后poll时，如果正序stack是空，将反序stack全pop到正序stack中，然后再正序stack pop一个出来
 
+##### Implement Stack By Two Queues: 
+
+两个Queue，其中一个Queue永远是空的，当push时，向不空的那个Queue push（两个都是空时制定一个Queue push)，pop或者top时，把不空的Queue poll到只剩一个元素（poll的同时把元素放入另一个Queue中），然后返回最后那个元素
+
 ##### MinStack:
 
 保存两个栈，一个栈用于保存真正元素，另一个保存当前最小

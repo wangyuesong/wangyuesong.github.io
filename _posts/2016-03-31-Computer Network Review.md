@@ -131,4 +131,6 @@ NAT（Network Address Translation)协议用于解决子网内IP数目有限，�
 
 但是，隐藏在NAT防火墙/路由器后的host无法被作为TCP连接的主机，因为它没有公网地址，只能通过NAT向公网发送包而无法主动被人连接（很多P2P应用要求peer a需要能连接网内任何一个peer b，b如果在NAT后就不行）。解决这种问题可以用connection reversal，发送一个请求让B主动去连A就可以了。还有UPnP协议，可以让NAT内网中的主机直接被外界连接。
 
+并不是所有router都支持IPV6协议，因此如果传输IPV6包的话，遇到IPV4 router，可以用一个IPV4包将IPV6包内容包裹起来，学名Tunnel，使用IPv4包跨过这一段不支持IPv6的路由器。等到路由器支持IPV6再解包。
 
+Routing Algo包括centralized algo（link-state）和decentralized alogo（distance-vector），centralized知道网络内所有边的状况，decen的只知道和自己相连的所有边的状况，点和点之间交换信息。还可以吧routing algo分为static和dynamic的两种。
