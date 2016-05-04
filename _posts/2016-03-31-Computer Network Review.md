@@ -134,3 +134,41 @@ NAT（Network Address Translation)协议用于解决子网内IP数目有限，�
 并不是所有router都支持IPV6协议，因此如果传输IPV6包的话，遇到IPV4 router，可以用一个IPV4包将IPV6包内容包裹起来，学名Tunnel，使用IPv4包跨过这一段不支持IPv6的路由器。等到路由器支持IPV6再解包。
 
 Routing Algo包括centralized algo（link-state）和decentralized alogo（distance-vector），centralized知道网络内所有边的状况，decen的只知道和自己相连的所有边的状况，点和点之间交换信息。还可以吧routing algo分为static和dynamic的两种。
+
+
+
+Linked State, Distance Vector这两种都是intra-AS的路由算法，在不同AS之间路由的算法叫做inter-AS路由算法，正式在internet中用的intra为RIP或OSPF，inter为BGP4。
+
+一般一个ISP就可以看做一个AS但是有的ISP将自己的网络分成多个interconnected的AS。AS之间的router叫做gateway router。
+
+
+CIDR主要用于简化路由表，假设一个路由器可以连到一个continuous的C级network， 192.168.12.0/24 to 192.168.15.0/24， 路由表就的原本4个entry通过CIDR就可以设置为192.168.12.0/22
+
+VLSM是通过子网掩码把大IP断划成小IP断的过程，可以将一个逻辑网络划分成多个。CIDR相反，可以将多个逻辑网络用一个路由entry表示出来，减少路由器路由表大小。
+
+Computer只能和同一个子网之间的主机相互通信。192.168.0.23 can communicate with a computer with an IP address of 192.168.0.234 but not with 192.168.1.5。不同网络之间的host通过router通信，router就是一个device with 2个network interfaces，each being on separate network Ids.
+
+由于host只能和自己网段内的机器通信，如果发现目标不在自己的网段，就把包发到default gateway（路由器）交给它去转发给其他网络。
+
+IP由两部分组成，网络号和主机号
+
+Class A networks use a default subnet mask of 255.0.0.0 and have 0-127 as their first octet. The address 10.52.36.11 is a class A address. Its first octet is 10, which is between 1 and 126, inclusive.
+
+Class B networks use a default subnet mask of 255.255.0.0 and have 128-191 as their first octet. The address 172.16.52.63 is a class B address. Its first octet is 172, which is between 128 and 191, inclusive.
+
+Class C networks use a default subnet mask of 255.255.255.0 and have 192-223 as their first octet. The address 192.168.123.132 is a class C address. Its first octet is 192, which is between 192 and 223, inclusive.
+
+如上是三类常用的network地址，netmask是固定的。但是作为网管，你可以
+
+ variable-length subnet masking (VLSM) 192.168.2.0/24 -> CIDR notation
+ 
+5.0 Link Layer
+ARP module in the sending host takes any IP address on the same LAN as input, and returns the corresponding MAC address.  ARP不同于DNS，只能解析同一个subnet下的node。
+
+在子网内发送包，发送者向整个子网内广播（设置MAC包的Broadcast bits）ARP Packet查询包，得到目标IP对应的MAC地址，然后发点对点的MAC包
+
+子网之间发送包，发送者无法知道目标IP的MAC地址，因此发送包时，IP设置为最终目标地址，但是Link层包的DEST MAC地址设置为网关的MAC地址，这样这个包就被发到网关（路由器）。网关因为连接两个子网，可以查到目标IP的MAC地址。因此将这个三层IP包重新包装到一个二层MAC包中（改变了Destination的mac地址），再扔到网络中发送。
+
+Ethernet Frame中有dest address(mac), source address(mac), type,data... type段是网络层和链路层的粘合剂，一般是IP协议，但是也可以是ARP Packet协议等。和IP包中的Protocol字段，TCP中的端口字段一样，是层与层之间的粘合剂。
+
+Ethernet不提供可靠传输，因此如果传输层协议使用的是UDP，则可能出现data gaps，如果使用的是TCP，则可以要求重传，但是Ethernet这一层是不知道传输的内容是否是新的的。
