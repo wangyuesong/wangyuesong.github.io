@@ -162,6 +162,27 @@ Class C networks use a default subnet mask of 255.255.255.0 and have 192-223 as 
 
  variable-length subnet masking (VLSM) 192.168.2.0/24 -> CIDR notation
  
+ distance vector algorithm: 
+ 
+ 一开始到自己设置为0，到其他设置为无限，第一次exchange得到周围router的距离，更新表上到某个点的最短距离以及对应的出口。 与此同时自己的邻居也在运行这个算法，得到了邻居的邻居的最短距离，更新了自己的vector。
+ 
+ 第二次exchange，邻居再次将自己的distance vector发过来，假设之前我（A）到D的最短距离是7，下一跳就直接是D（one hop），那么此时如果和我相距2的B发来的vector中表示它到D的距离是4，那么我们就把自己的vector更新为 D 6 B，表示到D的最短距离为6，第一跳是B
+ 
+ link state algo:
+ 
+ 在网路上发自己到邻居的包，这样每个节点都有一个网络拓扑图，simply run dijkstra algorithm（从自己开始）就可以找到到各个点的最短距离以及下一跳
+ 
+ dijkstra algo:
+ 
+ 从A开始，首先确定到自己周围节点的距离，然后下一个循环，找到离自己最近的节点B，然后通过B到B的邻居的距离，来更新自己到B邻居的距离，这时B的邻居C有可能也是自己的邻居，此时如果A->B + B->C < A->C,那么就更新自己到C的最短距离以及应选路径。如此循环往复，就可以得到一个到各点的最短距离树。
+
+路由器：
+
+input口，output口和switching fabric总体构成了forwarding plane。 routing processor是router control plane。 每个input口存一个shadow copy of routing table，这样就不用每次来packet都询问processor了。
+
+output口存储要转发的packet并且进行相应的link layer和physical layer包装
+
+
 5.0 Link Layer
 ARP module in the sending host takes any IP address on the same LAN as input, and returns the corresponding MAC address.  ARP不同于DNS，只能解析同一个subnet下的node。
 
