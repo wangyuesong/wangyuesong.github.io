@@ -108,6 +108,7 @@ Transport Layer的header主要由source port和dest port组成。当一个segmen
 
 使用TCP协议为基础的application有一个welcome socket（假设为12000端口），用来接收来自client的TCP连接请求，一旦transport layer收到segment并且demultiplex到12000端口上，这个application就会通过serverSocket.accept()创建一个新的TCP socket用来接收之后发来的数据，
 
+TCP Window 两个window，sliding window 负责flow control，由receiver管理， congestion window负责congestion control，由sender管理
 4.0 Network Layer
 Routing and fowarding(transfer a packet from an input link interface to the appropriate output link interface)
 
@@ -182,7 +183,7 @@ input口，output口和switching fabric总体构成了forwarding plane。 routin
 
 output口存储要转发的packet并且进行相应的link layer和physical layer包装
 
-
+ip包有checksum，且是仅仅针对header的。是一个16bit的放在header中，将整个ipheader（包括checksum）相加应该等于0.在传输过程中如果路由器发现chekcsum错误就把包丢掉，转法时如果对包进行了更改（比如减少了TTL）则router需要更改checksum。
 5.0 Link Layer
 ARP module in the sending host takes any IP address on the same LAN as input, and returns the corresponding MAC address.  ARP不同于DNS，只能解析同一个subnet下的node。
 
@@ -193,3 +194,14 @@ ARP module in the sending host takes any IP address on the same LAN as input, an
 Ethernet Frame中有dest address(mac), source address(mac), type,data... type段是网络层和链路层的粘合剂，一般是IP协议，但是也可以是ARP Packet协议等。和IP包中的Protocol字段，TCP中的端口字段一样，是层与层之间的粘合剂。
 
 Ethernet不提供可靠传输，因此如果传输层协议使用的是UDP，则可能出现data gaps，如果使用的是TCP，则可以要求重传，但是Ethernet这一层是不知道传输的内容是否是新的的。
+
+Broadcast domain 包括所有的能够通过data link layer的broadcast reach 到each other的nodes。比如所有connected到一堆interconnected的switches的node在一个广播域里。 广播域通过三层设备（router）隔开。
+
+冲突域collsion domain小于广播域，由二层设备隔开
+
+ARP,DHCP,RIP等等都需要用到广播，广播帧会在广播域里flooding，分割广播域可以增加网络效率
+
+vlan是在二层交换机上分割广播域的技术。一般的二层交换机，一个接口收到frame就会转发到所有端口。通过分vlan可以切割广播域。而两个广播域之间则又需要路由器来连接了（vlan间路由）
+
+hierarchical addresses表示在网络间路由时仅仅通过网络段来路由，只有当自己的路由表中能直接找到host时才通过后面的host位来路由
+
