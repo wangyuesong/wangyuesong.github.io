@@ -1,0 +1,19 @@
+gem install minitest-rollbar-reporter-0.1.0.gem
+undle exec rake release
+
+Brynjar Gretarsson
+
+问题：
+
+现在我们使用了minitest-reporters的use！方法，其中的user_runner!=>choose_reporters会根据环境变量调用reporters（RubyMine和Vim的环境变量下都会忽略我们自己设置的reporter）
+Solved:实际是因为bash下team_city为false导致的，在bash时传入TEAM_CITY=true即可测试
+
+
+现在上传的默认环境是unspecified，需要更改
+
+使用image-sharer来测试！（不使用af——testing框架）
+
+
+How to know CI's environment variables
+
+需要在rollbar端设置grouping rules，现在的grouping rules会默认把stacktrack中的文件名考虑进来。如果环境不一样，可能产生的fingerprint也不一样。

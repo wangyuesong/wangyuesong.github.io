@@ -14,7 +14,7 @@ tags:
 
 Java中的集合类主要由两个接口派生而出：Collection和Map
 
-##Collection 
+##Collection
 
 Collection下又有几个大的接口Set，List和Queue
 
@@ -39,7 +39,7 @@ add(element) throw Exception/offer(element)在尾部加入元素,element()/peek(
 PriorityQueue的增删都是LogN，取当前最小(大)元素是1
 
 ####Set
- 
+
 Set就记住一个HashSet就好了，hashSet的增加元素也是add，查找元素是否存在使用的是contains
 
 
@@ -78,11 +78,11 @@ PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中
 
  同样是PriorityQueue，这次连数据结构都不用建了，但是要写一个Comparator传给PQ，作为ListNode的比较器
 
-##### Implement Queue By Two Stacks: 
+##### Implement Queue By Two Stacks:
 
 一个Stack存正序（相对于Queue的正序），一个Stack存反序，add时向反序的Stack中push，此时反序Stack最顶端是最新push进来的元素。然后poll时，如果正序stack是空，将反序stack全pop到正序stack中，然后再正序stack pop一个出来
 
-##### Implement Stack By Two Queues: 
+##### Implement Stack By Two Queues:
 
 两个Queue，其中一个Queue永远是空的，当push时，向不空的那个Queue push（两个都是空时制定一个Queue push)，pop或者top时，把不空的Queue poll到只剩一个元素（poll的同时把元素放入另一个Queue中），然后返回最后那个元素
 
@@ -96,7 +96,7 @@ PriorityQueue,自建数据结构表示Array以及当前Array的最大值，PQ中
 
 发现HashMap（Set）在记录某个元素是否之前被遍历过很有用处
 
-##### LRU Cache: 
+##### LRU Cache:
 
 细节很多，使用一个双向链表和一个HashMap，HashMap用于使用o（1）的时间进行get,set操作，双向链表用于记录Last Recently Used的信息
 
@@ -167,7 +167,7 @@ public class Solution {
             tail.prev = tail.prev.prev;
         }
     }
-    
+
     public void moveToHead(ListNode currentNode){
            currentNode.prev = head;
            currentNode.next = head.next;
@@ -176,3 +176,10 @@ public class Solution {
     }
 }
 {% endhighlight %}
+
+
+### Data Stream as Disjoint Intervals
+
+TreeMap是一个有序的keyValue集合，通过红黑树实现（而非hashMap的arraylist实现），继承了Abstract接口所以是一个map，继承了NavigableMap接口表示它支持一系列的导航方法，比如返回有序的Key集合。
+映射根据其键的自然顺序进行排序，或者根据创建映射时提供的Comparator进行排序。所有的基本操作containsKey，get，put和remove都是logN。
+还有lowerKey，higherKey（keyValue）两个方法，lowerKey返回树中存在的刚好比keyValue小的key
