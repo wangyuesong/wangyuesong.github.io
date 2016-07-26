@@ -19,7 +19,7 @@ Access ISP, Regional ISP, tier-1 ISP，PoP(Points of Presence), Multihoming(Conn
 
 1.4 Delay, Loss and Throughput in Packet-Switched Networks
 
-Transmission Delay：发一个bit在router所耗费的时间. 
+Transmission Delay：发一个bit在router所耗费的时间.
 
 Propagation Delay: 从一个router到另一个router所耗费的时间
 
@@ -53,7 +53,7 @@ Encapsulation：host会implements五层协议，网络内部的link-layer switch
 2.0 Application Layer
 
 2.1 Principles of Network Applications
-         
+
 Socket: Interface between the application layer and transport layer within a host
 
 用户可以在socket的applicaiton layer一端控制很多，另一端只能控制transport layer的协议类型，以及一些参数比如buffer size
@@ -162,19 +162,19 @@ Class C networks use a default subnet mask of 255.255.255.0 and have 192-223 as 
 如上是三类常用的network地址，netmask是固定的。但是作为网管，你可以
 
  variable-length subnet masking (VLSM) 192.168.2.0/24 -> CIDR notation
- 
- distance vector algorithm: 
- 
+
+ distance vector algorithm:
+
  一开始到自己设置为0，到其他设置为无限，第一次exchange得到周围router的距离，更新表上到某个点的最短距离以及对应的出口。 与此同时自己的邻居也在运行这个算法，得到了邻居的邻居的最短距离，更新了自己的vector。
- 
+
  第二次exchange，邻居再次将自己的distance vector发过来，假设之前我（A）到D的最短距离是7，下一跳就直接是D（one hop），那么此时如果和我相距2的B发来的vector中表示它到D的距离是4，那么我们就把自己的vector更新为 D 6 B，表示到D的最短距离为6，第一跳是B
- 
+
  link state algo:
- 
+
  在网路上发自己到邻居的包，这样每个节点都有一个网络拓扑图，simply run dijkstra algorithm（从自己开始）就可以找到到各个点的最短距离以及下一跳
- 
+
  dijkstra algo:
- 
+
  从A开始，首先确定到自己周围节点的距离，然后下一个循环，找到离自己最近的节点B，然后通过B到B的邻居的距离，来更新自己到B邻居的距离，这时B的邻居C有可能也是自己的邻居，此时如果A->B + B->C < A->C,那么就更新自己到C的最短距离以及应选路径。如此循环往复，就可以得到一个到各点的最短距离树。
 
 路由器：
@@ -205,3 +205,22 @@ vlan是在二层交换机上分割广播域的技术。一般的二层交换机�
 
 hierarchical addresses表示在网络间路由时仅仅通过网络段来路由，只有当自己的路由表中能直接找到host时才通过后面的host位来路由
 
+
+###HTTPS
+
+Basically, the SSLError jumped up at you because one of the following is true:
+
+The remote server presented a valid certificate, but your system lacks root certificates ("CA certs") without which you can't even verify whether you've put on shoes this morning.
+
+The remote server presented a certificate that is distributed within your company/organization and which you were supposed to trust, but you haven't configured the client properly.
+
+You were subject to a Man in the Middle attack (somebody on the network pretending to be that server) and now you're glad that the error was raised. The attackers return home in shame.
+
+
+### PEM and DER
+Certificate formats: PEM/DER
+DER is a binary format, while PEM is simply the base64 encoding of the DER format with BEGIN/END header and footer lines added. Because of these delimiters, multiple certificates and keys can be stored together in a single file. This, combined by the fact it’s in plain text, makes PEM the more popular encoding.
+
+*.pem is always PEM;
+*.crt is usually PEM, but can be DER;
+*.cer is usually DER, but can be PEM.

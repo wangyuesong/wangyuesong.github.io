@@ -63,7 +63,7 @@ For a Maximum Segment Tree, which each node has an extra value max to store the 
 
 Implement a modify function with three parameter root, index and value to change the node's value with [start, end] = [index, index] to the new given value. Make sure after this change, every node in segment tree still has the max attribute with the correct value.
 
-这种更新就要自下而上了，因为父亲节点的值是由子节点决定的，其实上一个sum tree问题也可以这么解决，父亲节点的值同样是由子节点决定
+这种更新就要自下而上了(比如就把最大值更新成一个小的值，在从上而下的过程中你是不知道这个的是最大值的)，因为父亲节点的值是由子节点决定的，其实上一个sum tree问题也可以这么解决，父亲节点的值同样是由子节点决定，只不过正巧由于父亲结点的值是由所有子节点的某种和决定的，因此我们可以利用这个关系。
 
 采用后序遍历
 
@@ -83,7 +83,7 @@ Implement a modify function with three parameter root, index and value to change
  */
 public class Solution {
     /**
-     *@param root, index, value: The root of segment tree and 
+     *@param root, index, value: The root of segment tree and
      *@ change the node's value with [index, index] to the new given value
      *@return: void
      */
