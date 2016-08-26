@@ -221,6 +221,15 @@ You were subject to a Man in the Middle attack (somebody on the network pretendi
 Certificate formats: PEM/DER
 DER is a binary format, while PEM is simply the base64 encoding of the DER format with BEGIN/END header and footer lines added. Because of these delimiters, multiple certificates and keys can be stored together in a single file. This, combined by the fact it’s in plain text, makes PEM the more popular encoding.
 
-*.pem is always PEM;
-*.crt is usually PEM, but can be DER;
-*.cer is usually DER, but can be PEM.
+####
+pem is always PEM;
+crt is usually PEM, but can be DER;
+cer is usually DER, but can be PEM.
+
+
+#### AWS
+/etc/hosts是最早的DNS，里面是ip->hostname的解析，当你输入hostname -v -f 或者 dig abc.com（去解析dns时），首先查找的是这个文件里面的内容，如果找到就直接返回对应的ip，这个文件中可以多个hostname对应一个ip
+
+在AWS中，如果instance存在于默认的子网，那么在创建instance时instance会有一个默认的dns server（子网网络地址+2），以及一个默认的private DNS name（ip-12412.124.12.2141241-internal.compute）如果使用VPS，在指定dns解析策略时可以使用amazon的dns provider，也可以自己设置自己的dns service provider，指向vps中的某个机器作为dns server，或者更改自己的hostname的后缀，这样则可以得到一个ip-12412.124124.12421-yourdomain.com的dns名称，但是这个dns域名如果你不在dns server上设置是没人能解析到的
+
+之后再改这个instance的hostname信息，应该不会反映在aws的panel中的private dns上。
