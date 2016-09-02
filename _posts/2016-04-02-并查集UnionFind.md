@@ -127,5 +127,5 @@ private int find(int p)
 
 这种算法下，find和union的效率都接近1（因为树高很小）
 
-
-
+只要在find时加这一句话！！！
+ groups[i] = groups[groups[i]];
